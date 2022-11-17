@@ -43,6 +43,7 @@ class Genres(QMainWindow):
         self.comboBox.addItem('исторический')
         self.comboBox.addItem('нуар')
 
+
     def run(self):
         cur = self.con.cursor()
         print(str(self.comboBox.currentText()))
