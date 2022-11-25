@@ -12,15 +12,15 @@ class MyWidget(QMainWindow):
         self.pushButton_2.clicked.connect(self.assistant)
         self.pushButton_3.clicked.connect(self.visitor)
 
-        self.menager_form = MenagerForm(self, "Данные для второй формы")
+        self.menager_form = MenagerForm()
         self.menager_form.setUpdatesEnabled(True)
         self.menager_form.hide()
 
-        self.assistant_form = AssistantForm(self, "Данные для второй формы")
+        self.assistant_form = AssistantForm()
         self.assistant_form.setUpdatesEnabled(True)
         self.assistant_form.hide()
 
-        self.visitor_form = VisitorForm(self, "Данные для второй формы")
+        self.visitor_form = VisitorForm()
         self.visitor_form.setUpdatesEnabled(True)
         self.visitor_form.hide()
 
@@ -44,7 +44,7 @@ class MyWidget(QMainWindow):
 
 
 class MenagerForm(QWidget):
-    def __init__(self, *args):
+    def __init__(self):
         super().__init__()
         self.initUI()
 
@@ -54,7 +54,7 @@ class MenagerForm(QWidget):
 
 
 class AssistantForm(QWidget):
-    def __init__(self, *args):
+    def __init__(self):
         super().__init__()
         self.initUI()
 
@@ -64,7 +64,7 @@ class AssistantForm(QWidget):
 
 
 class VisitorForm(QWidget):
-    def __init__(self, *args):
+    def __init__(self):
         super().__init__()
         self.initUI()
 
