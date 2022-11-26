@@ -8,9 +8,9 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('first.ui', self)
-        self.pushButton.clicked.connect(self.menager)
-        self.pushButton_2.clicked.connect(self.assistant)
-        self.pushButton_3.clicked.connect(self.visitor)
+        self.pushButton.clicked.connect(self.visitor)
+        self.pushButton_2.clicked.connect(self.menager)
+        self.pushButton_3.clicked.connect(self.assistant)
 
         self.menager_form = MenagerForm()
         self.menager_form.setUpdatesEnabled(True)
@@ -49,8 +49,9 @@ class MenagerForm(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(600, 300, 300, 300)
-        self.setWindowTitle('Вторая форма менаджера')
+        self.setGeometry(300, 300, 700, 500)
+        self.setWindowTitle('Менеджер')
+        self.setStyleSheet("background-color: plum;")
 
 
 class AssistantForm(QWidget):
@@ -59,8 +60,9 @@ class AssistantForm(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(600, 300, 300, 300)
-        self.setWindowTitle('Вторая форма кассира')
+        self.setGeometry(300, 300, 700, 500)
+        self.setWindowTitle('Кассир')
+        self.setStyleSheet("background-color: plum;")
 
 
 class VisitorForm(QWidget):
@@ -69,8 +71,9 @@ class VisitorForm(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(600, 300, 300, 300)
-        self.setWindowTitle('Вторая форма посетителя')
+        self.setGeometry(300, 300, 700, 500)
+        self.setWindowTitle('Посетитель')
+        self.setStyleSheet("background-color: plum;")
 
 
 if __name__ == '__main__':
