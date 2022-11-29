@@ -6,6 +6,13 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 from PyQt5.QtWidgets import QLabel, QLineEdit
 from PyQt5.QtWidgets import QApplication, QComboBox, QPushButton, QTableWidget
+import sqlite3
+import sys
+
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
+from PyQt5.QtWidgets import QMainWindow
 
 password = None
 
@@ -57,80 +64,69 @@ class MyWidget(QMainWindow):
             self.visitor_form.hide()
 
 
-class MenagerForm(QWidget):
+class MenagerForm(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.initUI()
-
-    def initUI(self):
-        self.setGeometry(300, 300, 700, 500)
-        self.setWindowTitle('Менеджер')
+        uic.loadUi('visitor.ui', self)
         self.setStyleSheet("background-color: plum;")
+        self.comboBox.activated[str].connect(self.run)
+
+        self.db = QSqlDatabase.addDatabase('QSQLITE')
+        self.db.setDatabaseName('films_db.sqlite')
+        self.db.open()
+
+        self.model = QSqlTableModel(self, self.db)
+        self.model.setTable('films')
+        self.model.select()
+        self.tableView.setModel(self.model)
+
+    def run(self, text):
+        self.model.setFilter('genre=(SELECT id FROM genres WHERE title = "{}")'.format(text))
+        self.model.select()
+        self.tableView.setModel(self.model)
 
 
-class AssistantForm(QWidget):
+class AssistantForm(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.initUI()
-
-    def initUI(self):
-        self.setGeometry(300, 300, 700, 500)
-        self.setWindowTitle('Кассир')
+        uic.loadUi('visitor.ui', self)
         self.setStyleSheet("background-color: plum;")
+        self.comboBox.activated[str].connect(self.run)
 
+        self.db = QSqlDatabase.addDatabase('QSQLITE')
+        self.db.setDatabaseName('films_db.sqlite')
+        self.db.open()
 
-class VisitorForm(QWidget):
+        self.model = QSqlTableModel(self, self.db)
+        self.model.setTable('films')
+        self.model.select()
+        self.tableView.setModel(self.model)
+
+    def run(self, text):
+        self.model.setFilter('genre=(SELECT id FROM genres WHERE title = "{}")'.format(text))
+        self.model.select()
+        self.tableView.setModel(self.model)
+
+class VisitorForm(QMainWindow):
     def __init__(self):
         super().__init__()
+        uic.loadUi('visitor.ui', self)
         self.setStyleSheet("background-color: plum;")
-        self.con = sqlite3.connect("films_db.sqlite")
-        self.setGeometry(300, 300, 600, 500)
-        self.setWindowTitle('Посетитель')
+        self.comboBox.activated[str].connect(self.run)
 
-        self.comboBox = QComboBox(self)
-        self.comboBox.setGeometry(10, 10, 150, 40)
-        self.comboBox.addItem('комедия')
-        self.comboBox.addItem('драма')
-        self.comboBox.addItem('мелодрама')
-        self.comboBox.addItem('детектив')
-        self.comboBox.addItem('документальный')
-        self.comboBox.addItem('ужасы')
-        self.comboBox.addItem('музыка')
-        self.comboBox.addItem('фантастика')
-        self.comboBox.addItem('анимация')
-        self.comboBox.addItem('биография')
-        self.comboBox.addItem('боевик')
-        self.comboBox.addItem('приключения')
-        self.comboBox.addItem('война')
-        self.comboBox.addItem('семейный')
-        self.comboBox.addItem('триллер')
-        self.comboBox.addItem('фэнтези')
-        self.comboBox.addItem('вестерн')
-        self.comboBox.addItem('мистика')
-        self.comboBox.addItem('короткометражный')
-        self.comboBox.addItem('мюзикл')
-        self.comboBox.addItem('исторический')
-        self.comboBox.addItem('нуар')
+        self.db = QSqlDatabase.addDatabase('QSQLITE')
+        self.db.setDatabaseName('films_db.sqlite')
+        self.db.open()
 
-        self.pushButton = QPushButton('Показать', self)
-        self.pushButton.setGeometry(80, 100, 80, 40)
-        self.pushButton.clicked.connect(self.run)
+        self.model = QSqlTableModel(self, self.db)
+        self.model.setTable('films')
+        self.model.select()
+        self.tableView.setModel(self.model)
 
-        self.tableWidget = QTableWidget(self)
-        self.tableWidget.setGeometry(180, 10, 400, 400)
-
-    def run(self):
-        cur = self.con.cursor()
-        result = cur.execute('''SELECT * FROM films WHERE genre=(SELECT id FROM genres WHERE title = {})''', (
-            str(self.comboBox.currentText()))).fetchall()
-        self.tableWidget.setRowCount(len(result))
-        self.tableWidget.setColumnCount(len(result[0]))
-        for i, row in enumerate(result):
-            self.tableWidget.setRowCount(
-                self.tableWidget.rowCount() + 1)
-            for j, elem in enumerate(row):
-                self.tableWidget.setItem(
-                    i, j, QTableWidgetItem(str(elem)))
+    def run(self, text):
+        self.model.setFilter('genre=(SELECT id FROM genres WHERE title = "{}")'.format(text))
+        self.model.select()
+        self.tableView.setModel(self.model)
 
 
 class PasswordForm(QWidget):
