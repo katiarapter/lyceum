@@ -1,20 +1,8 @@
 import sys
-
-from PyQt5 import uic
 import sqlite3
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
-from PyQt5.QtWidgets import QLabel, QLineEdit
-from PyQt5.QtWidgets import QApplication, QComboBox, QPushButton, QTableWidget
-import sqlite3
-import sys
-
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QLabel, QLineEdit, QComboBox, QTableWidget
 from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
-from PyQt5.QtWidgets import QMainWindow
-
-password = None
 
 
 class MyWidget(QMainWindow):
@@ -42,7 +30,6 @@ class MyWidget(QMainWindow):
     # self.password_form.hide()
 
     def menager(self):
-        global password
         # self.password_form.show()
         if self.menager_form.isHidden():
             self.menager_form.show()
@@ -50,7 +37,6 @@ class MyWidget(QMainWindow):
             self.menager_form.hide()
 
     def assistant(self):
-        global password
         # self.password_form.show()
         if self.assistant_form.isHidden():
             self.assistant_form.show()
@@ -67,8 +53,7 @@ class MyWidget(QMainWindow):
 class MenagerForm(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('visitor.ui', self)
-        self.setStyleSheet("background-color: plum;")
+        uic.loadUi('menager.ui', self)
         self.comboBox.activated[str].connect(self.run)
 
         self.db = QSqlDatabase.addDatabase('QSQLITE')
@@ -89,8 +74,7 @@ class MenagerForm(QMainWindow):
 class AssistantForm(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('visitor.ui', self)
-        self.setStyleSheet("background-color: plum;")
+        uic.loadUi('assistant.ui', self)
         self.comboBox.activated[str].connect(self.run)
 
         self.db = QSqlDatabase.addDatabase('QSQLITE')
@@ -107,11 +91,11 @@ class AssistantForm(QMainWindow):
         self.model.select()
         self.tableView.setModel(self.model)
 
+
 class VisitorForm(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('visitor.ui', self)
-        self.setStyleSheet("background-color: plum;")
         self.comboBox.activated[str].connect(self.run)
 
         self.db = QSqlDatabase.addDatabase('QSQLITE')
@@ -160,13 +144,9 @@ class PasswordForm(QWidget):
         self.name_input.move(150, 90)
 
     def hello(self):
-        global password
         name = self.name_input.text()
         if name == 'qwertyuiop':
-            password = True
             self.password_form.hide()
-        else:
-            password = False
 
 
 if __name__ == '__main__':
