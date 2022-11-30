@@ -445,11 +445,6 @@
     </item>
     <item>
      <property name="text">
-      <string>нуар</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
       <string>ужасы</string>
      </property>
     </item>
@@ -526,26 +521,6 @@
     <item>
      <property name="text">
       <string>вестерн</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>мистика</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>исторический</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>короткометражный</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>мюзикл</string>
      </property>
     </item>
    </widget>

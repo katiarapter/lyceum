@@ -25,23 +25,25 @@ class MyWidget(QMainWindow):
         self.visitor_form.setUpdatesEnabled(True)
         self.visitor_form.hide()
 
-    # self.password_form = PasswordForm()
-    # self.password_form.setUpdatesEnabled(True)
-    # self.password_form.hide()
+        self.password_form = PasswordForm()
+        self.password_form.setUpdatesEnabled(True)
+        self.password_form.hide()
 
     def menager(self):
-        # self.password_form.show()
-        if self.menager_form.isHidden():
-            self.menager_form.show()
-        else:
-            self.menager_form.hide()
+        self.password_form.show()
+        if self.password_form.isHidden():
+            if self.menager_form.isHidden():
+                self.menager_form.show()
+            else:
+                self.menager_form.hide()
 
     def assistant(self):
-        # self.password_form.show()
-        if self.assistant_form.isHidden():
-            self.assistant_form.show()
-        else:
-            self.assistant_form.hide()
+        self.password_form.show()
+        if self.password_form.isHidden():
+            if self.assistant_form.isHidden():
+                self.assistant_form.show()
+            else:
+                self.assistant_form.hide()
 
     def visitor(self):
         if self.visitor_form.isHidden():
@@ -116,6 +118,7 @@ class VisitorForm(QMainWindow):
 class PasswordForm(QWidget):
     def __init__(self):
         super().__init__()
+        self.label_2 = None
         self.name_input = None
         self.name_label = None
         self.label = None
@@ -123,9 +126,9 @@ class PasswordForm(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(500, 500, 400, 400)
+        self.setGeometry(500, 500, 400, 250)
         self.setWindowTitle('Пароль')
-        self.setStyleSheet("background-color: turquoise;")
+        self.setStyleSheet('background-color: turquoise;')
 
         self.btn = QPushButton('Ввести', self)
         self.btn.resize(self.btn.sizeHint())
@@ -133,11 +136,15 @@ class PasswordForm(QWidget):
         self.btn.clicked.connect(self.hello)
 
         self.label = QLabel(self)
-        self.label.setText("Пожалуйста, введите пароль")
+        self.label.setText('Пожалуйста, введите пароль')
         self.label.move(40, 30)
 
+        self.label_2 = QLabel(self)
+        self.label_2.setText('                                       ')
+        self.label_2.move(40, 200)
+
         self.name_label = QLabel(self)
-        self.name_label.setText("Пароль: ")
+        self.name_label.setText('Пароль: ')
         self.name_label.move(40, 90)
 
         self.name_input = QLineEdit(self)
@@ -145,8 +152,10 @@ class PasswordForm(QWidget):
 
     def hello(self):
         name = self.name_input.text()
-        if name == 'qwertyuiop':
+        if name == 'kino888ass':
             self.password_form.hide()
+        else:
+            self.label_2.setText('Вы ввели не тот пароль!!!')
 
 
 if __name__ == '__main__':
