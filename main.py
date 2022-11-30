@@ -152,7 +152,7 @@ class PasswordForm(QWidget):
 
     def hello(self):
         name = self.name_input.text()
-        if name == 'kino888ass':
+        if name == 'passowrd':
             self.password_form.hide()
         else:
             self.label_2.setText('Вы ввели не тот пароль!!!')
