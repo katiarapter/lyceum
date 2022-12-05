@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>893</width>
+    <width>1074</width>
     <height>635</height>
    </rect>
   </property>
@@ -527,9 +527,9 @@
    <widget class="QTableView" name="tableView">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>340</x>
       <y>40</y>
-      <width>581</width>
+      <width>701</width>
       <height>511</height>
      </rect>
     </property>
@@ -539,7 +539,7 @@
      <rect>
       <x>20</x>
       <y>150</y>
-      <width>241</width>
+      <width>301</width>
       <height>141</height>
      </rect>
     </property>
@@ -601,8 +601,8 @@
      <rect>
       <x>20</x>
       <y>370</y>
-      <width>235</width>
-      <height>80</height>
+      <width>292</width>
+      <height>88</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -651,8 +651,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>893</width>
-     <height>21</height>
+     <width>1074</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

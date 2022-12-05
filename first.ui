@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>600</height>
+    <width>816</width>
+    <height>603</height>
    </rect>
   </property>
   <property name="palette">
@@ -432,7 +432,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>240</x>
       <y>140</y>
       <width>311</width>
       <height>41</height>
@@ -1009,8 +1009,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>290</y>
+      <x>200</x>
+      <y>300</y>
       <width>411</width>
       <height>31</height>
      </rect>
@@ -1027,8 +1027,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>320</y>
+      <x>210</x>
+      <y>330</y>
       <width>401</width>
       <height>31</height>
      </rect>
@@ -1048,8 +1048,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>789</width>
-     <height>21</height>
+     <width>816</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
