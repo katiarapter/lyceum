@@ -215,7 +215,7 @@ class PasswordFormM(QWidget):
     def hello(self):
         global password
         name = self.name_input.text()
-        if name == '':
+        if name == 'menager':
             password = True
             self.label_2.setText('Нажмите на кнопку еще раз')
         else:
@@ -261,7 +261,7 @@ class PasswordFormA(QWidget):
     def hello(self):
         global password_a
         name = self.name_input.text()
-        if name == '':
+        if name == 'assistant':
             password_a = True
             self.label_2.setText('Нажмите на кнопку еще раз')
         else:
