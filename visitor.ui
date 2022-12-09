@@ -43,8 +43,8 @@
      <colorrole role="Midlight">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>63</red>
-        <green>191</green>
+        <red>255</red>
+        <green>255</green>
         <blue>255</blue>
        </color>
       </brush>
@@ -180,8 +180,8 @@
      <colorrole role="Midlight">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>63</red>
-        <green>191</green>
+        <red>255</red>
+        <green>255</green>
         <blue>255</blue>
        </color>
       </brush>
@@ -317,8 +317,8 @@
      <colorrole role="Midlight">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>63</red>
-        <green>191</green>
+        <red>255</red>
+        <green>255</green>
         <blue>255</blue>
        </color>
       </brush>
@@ -508,23 +508,11 @@
       <string>семейный</string>
      </property>
     </item>
-    <item>
-     <property name="text">
-      <string>триллер</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>фэнтези</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>вестерн</string>
-     </property>
-    </item>
    </widget>
    <widget class="QTableView" name="tableView">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -532,6 +520,18 @@
       <width>701</width>
       <height>511</height>
      </rect>
+    </property>
+    <property name="lineWidth">
+     <number>3</number>
+    </property>
+    <property name="showGrid">
+     <bool>true</bool>
+    </property>
+    <property name="gridStyle">
+     <enum>Qt::DotLine</enum>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">

@@ -2,6 +2,7 @@ import sys
 import sqlite3
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QLabel, QLineEdit, QComboBox, QTableWidget
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
 
 
@@ -43,6 +44,7 @@ class MyWidget(QMainWindow):
         self.password_form_m.show()
         if password is True:
             self.password_form_m.hide()
+            password = False
             self.menager_form.show()
 
     def assistant(self):
@@ -50,6 +52,7 @@ class MyWidget(QMainWindow):
         self.password_form_a.show()
         if password_a is True:
             self.password_form_a.hide()
+            password_a = False
             self.assistant_form.show()
 
     def visitor(self):
@@ -65,6 +68,8 @@ class MenagerForm(QMainWindow):
         uic.loadUi('menager.ui', self)
         self.setWindowTitle('Менеджер')
         self.comboBox.activated[str].connect(self.genre)
+        self.pushButton_2.clicked.connect(self.delete)
+        self.pushButton.clicked.connect(self.add)
 
         self.db = QSqlDatabase.addDatabase('QSQLITE')
         self.db.setDatabaseName('films_db.sqlite')
@@ -80,12 +85,38 @@ class MenagerForm(QMainWindow):
         self.model.select()
         self.tableView.setModel(self.model)
 
+    def delete(self):
+        name = self.lineEdit_2.text()
+        con = sqlite3.connect('films_db.sqlite')
+        cur = con.cursor()
+        # res = cur.execute("""DELETE FROM films WHERE title = ? """, (name, )).fetchall()
+        cur.close()
+        # con.commit()
+        # здесь появляется ошибка loked db
+        con.close()
+
+    def add(self):
+        name = self.lineEdit_2.text()
+        amount = self.lineEdit.text()
+        genre = self.lineEdit_3.text()
+        duration = self.lineEdit_4.text()
+        con = sqlite3.connect('films_db.sqlite')
+        cur = con.cursor()
+        # res = cur.execute("""INSERT INTO films VALUES (?, ?, ?, ?, ?) """,
+        # (0, name, amount, genre, duration)).fetchall()
+        cur.close()
+        # con.commit()
+        # здесь появляется ошибка loked db
+        con.close()
+
 
 class AssistantForm(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('assistant.ui', self)
         self.setWindowTitle('Кассир')
+        self.label_9.hide()
+        self.pushButton.clicked.connect(self.sell)
 
         self.comboBox.activated[str].connect(self.genre)
 
@@ -98,26 +129,30 @@ class AssistantForm(QMainWindow):
         self.model.select()
         self.tableView.setModel(self.model)
 
-        self.pushButton.clicked.connect(self.sell)
-
     def genre(self, text):
         self.model.setFilter('genre=(SELECT id FROM genres WHERE title = "{}")'.format(text))
         self.model.select()
         self.tableView.setModel(self.model)
 
     def sell(self):
-        amount = self.lineEdit.text()
-        name = self.lineEdit_2.text()
-        con = sqlite3.connect('films_db.sqlite')
-        cur = con.cursor()
-        res = cur.execute("""UPDATE films SET tickets=? WHERE title = ? """, (amount, name)).fetchall()
-        count = cur.execute("""SELECT tickets FROM films WHERE title = ? """, (name, )).fetchall()
-        print(res)
-        cur.close()
-        # con.commit()
-        con.close()
-        print(f'prodano {amount} from {name}')
-        print(f'ostalos {count[0]} byletov')
+        valid = QMessageBox.question(
+            self, '', "Действительно продать билеты?",
+            QMessageBox.Yes, QMessageBox.No)
+        if valid == QMessageBox.Yes:
+            amount = self.lineEdit.text()
+            name = self.lineEdit_2.text()
+            con = sqlite3.connect('films_db.sqlite')
+            cur = con.cursor()
+            # res = cur.execute("""UPDATE films SET tickets=? WHERE title = ? """, (amount, name)).fetchall()
+            count = cur.execute("""SELECT tickets FROM films WHERE title = ? """, (name, )).fetchall()
+            cur.close()
+            # con.commit()
+            # здесь появляется ошибка loked db
+            con.close()
+            print(f'prodano {amount} from {name}')
+            print(f'ostalos {int(count[0][0]) - int(amount)} byletov')
+            print(f'Измените пожауйста в таблице значение на {int(count[0][0]) - int(amount)}')
+            self.label_9.show()
 
 
 class VisitorForm(QMainWindow):
@@ -180,7 +215,7 @@ class PasswordFormM(QWidget):
     def hello(self):
         global password
         name = self.name_input.text()
-        if name == 'password':
+        if name == '':
             password = True
             self.label_2.setText('Нажмите на кнопку еще раз')
         else:
@@ -226,7 +261,7 @@ class PasswordFormA(QWidget):
     def hello(self):
         global password_a
         name = self.name_input.text()
-        if name == 'qwerty':
+        if name == '':
             password_a = True
             self.label_2.setText('Нажмите на кнопку еще раз')
         else:
