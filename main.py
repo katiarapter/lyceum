@@ -86,6 +86,9 @@ class MenagerForm(QMainWindow):
         self.tableView.setModel(self.model)
 
     def delete(self):
+        valid = QMessageBox.question(
+            self, '', "Функция времнно не работает",
+            QMessageBox.Yes, QMessageBox.No)
         name = self.lineEdit_2.text()
         con = sqlite3.connect('films_db.sqlite')
         cur = con.cursor()
@@ -96,6 +99,9 @@ class MenagerForm(QMainWindow):
         con.close()
 
     def add(self):
+        valid = QMessageBox.question(
+            self, '', "Функция времнно не работает",
+            QMessageBox.Yes, QMessageBox.No)
         name = self.lineEdit_2.text()
         amount = self.lineEdit.text()
         genre = self.lineEdit_3.text()
