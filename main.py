@@ -4,6 +4,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QLabel, QLineEdit, QComboBox, QTableWidget
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
+from PyQt5.QtGui import QPixmap
 
 
 password = False
@@ -15,6 +16,8 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('first.ui', self)
         self.setWindowTitle('Кинотеатр')
+        pixmap = QPixmap('data/kino3.PNG')
+        self.label_4.setPixmap(pixmap)
         self.pushButton.clicked.connect(self.visitor)
         self.pushButton_2.clicked.connect(self.menager)
         self.pushButton_3.clicked.connect(self.assistant)
@@ -90,6 +93,9 @@ class MenagerForm(QMainWindow):
             self, '', "Функция времнно не работает",
             QMessageBox.Yes, QMessageBox.No)
         name = self.lineEdit_2.text()
+        amount = self.lineEdit.text()
+        genre = self.lineEdit_3.text()
+        duration = self.lineEdit_4.text()
         con = sqlite3.connect('films_db.sqlite')
         cur = con.cursor()
         # res = cur.execute("""DELETE FROM films WHERE title = ? """, (name, )).fetchall()
@@ -97,6 +103,7 @@ class MenagerForm(QMainWindow):
         # con.commit()
         # здесь появляется ошибка loked db
         con.close()
+        print(f'deleted {name} {amount} {genre} {duration}')
 
     def add(self):
         valid = QMessageBox.question(
@@ -114,6 +121,7 @@ class MenagerForm(QMainWindow):
         # con.commit()
         # здесь появляется ошибка loked db
         con.close()
+        print(f'added {name} {amount} {genre} {duration}')
 
 
 class AssistantForm(QMainWindow):
@@ -134,25 +142,29 @@ class AssistantForm(QMainWindow):
         self.model.setTable('films')
         self.model.select()
         self.tableView.setModel(self.model)
+        self.db.close()
 
     def genre(self, text):
         self.model.setFilter('genre=(SELECT id FROM genres WHERE title = "{}")'.format(text))
         self.model.select()
         self.tableView.setModel(self.model)
+        self.db.close()
 
     def sell(self):
         valid = QMessageBox.question(
             self, '', "Действительно продать билеты?",
             QMessageBox.Yes, QMessageBox.No)
         if valid == QMessageBox.Yes:
+            self.db.close()
             amount = self.lineEdit.text()
             name = self.lineEdit_2.text()
             con = sqlite3.connect('films_db.sqlite')
             cur = con.cursor()
-            # res = cur.execute("""UPDATE films SET tickets=? WHERE title = ? """, (amount, name)).fetchall()
+            res = cur.execute("""UPDATE films SET tickets=? WHERE title = ? """, (amount, name)).fetchall()
             count = cur.execute("""SELECT tickets FROM films WHERE title = ? """, (name, )).fetchall()
             cur.close()
-            # con.commit()
+            print(res)
+            con.commit()
             # здесь появляется ошибка loked db
             con.close()
             print(f'prodano {amount} from {name}')
@@ -208,7 +220,7 @@ class PasswordFormM(QWidget):
         self.label.move(40, 30)
 
         self.label_2 = QLabel(self)
-        self.label_2.setText('                                               ')
+        self.label_2.setText('                                                                ')
         self.label_2.move(40, 200)
 
         self.name_label = QLabel(self)
@@ -217,13 +229,14 @@ class PasswordFormM(QWidget):
 
         self.name_input = QLineEdit(self)
         self.name_input.move(150, 90)
+        self.name_input.setEchoMode(QLineEdit.Password)
 
     def hello(self):
         global password
         name = self.name_input.text()
         if name == 'menager':
             password = True
-            self.label_2.setText('Нажмите на кнопку еще раз')
+            self.label_2.setText('Нажмите на кнопку "менаджер" еще раз')
         else:
             password = False
             self.label_2.setText('Вы ввели не тот пароль!!!')
@@ -254,7 +267,7 @@ class PasswordFormA(QWidget):
         self.label.move(40, 30)
 
         self.label_2 = QLabel(self)
-        self.label_2.setText('                                               ')
+        self.label_2.setText('                                                        ')
         self.label_2.move(40, 200)
 
         self.name_label = QLabel(self)
@@ -263,13 +276,14 @@ class PasswordFormA(QWidget):
 
         self.name_input = QLineEdit(self)
         self.name_input.move(150, 90)
+        self.name_input.setEchoMode(QLineEdit.Password)
 
     def hello(self):
         global password_a
         name = self.name_input.text()
         if name == 'assistant':
             password_a = True
-            self.label_2.setText('Нажмите на кнопку еще раз')
+            self.label_2.setText('Нажмите на кнопку "кассир" еще раз')
         else:
             password_a = False
             self.label_2.setText('Вы ввели не тот пароль!!!')
